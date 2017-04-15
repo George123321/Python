@@ -10,7 +10,7 @@ def skal_proizv(a, b):
 
 def write_vec():
     print('Введите координаты вектора в строку через пробел')
-    return list(map(int, input().split()))
+    return list(map(float, input().split()))
 
 
 def write_matrix():
@@ -18,7 +18,7 @@ def write_matrix():
     print('Введите количество строк матрицы')
     n = int(input())
     for i in range(n):
-        A.append([int(x) for x in input().split()])
+        A.append([float(x) for x in input().split()])
     return A
 
 def matrix_2D(A): #Печатает матрицу
@@ -40,3 +40,8 @@ def matrix_multiply(A, B):
         for j in range(len(B)):
             C[i].append(skal_proizv(A[i], B[j]))
     return C
+
+A = write_matrix()
+B = write_matrix()
+C = write_matrix()
+matrix_2D(matrix_multiply(matrix_multiply(A, B), C))
