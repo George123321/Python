@@ -1,4 +1,3 @@
-__author__ = 'student'
 class Node:
     def __init__(self, data):
         self.key = data
@@ -13,8 +12,8 @@ class Tree:
 
     def find(self, data):
         p = self.root
-        while p is not None and p.key != data:
-            if data > p.key:
+        while p is not None:
+            if data >= p.key:
                 p = p.right
             else:
                 p = p.left
@@ -26,8 +25,7 @@ class Tree:
         if node is None:
             return
         self.print(node.left)
-        if node.left is None and node.right is None:
-            print(node.key, end=' ') # Это не совсем обратный ход рекурсии
+        print(node.key, end=' ') # Это не совсем обратный ход рекурсии
         self.print(node.right)
 
     def add(self, data):
@@ -54,7 +52,6 @@ class Tree:
                     break
                 else:
                     p = p.right
-
 
 tree = Tree()
 A = [int(x) for x in input().split()]

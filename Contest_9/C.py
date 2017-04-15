@@ -1,5 +1,3 @@
-#По Хирьянову
-__author__ = 'student'
 class Node:
     def __init__(self, data):
         self.key = data
@@ -11,6 +9,7 @@ class Node:
 class Tree:
     def __init__(self):
         self.root = None
+        self.l = 0
 
     def find(self, data):
         p = self.root
@@ -37,26 +36,36 @@ class Tree:
         node = Node(data)
         if self.root is None:
             self.root = node
+            self.l = 1
             return
         p = self.root
+        c = 1
         while True:
             if data < p.key:
                 if p.left is None:
                     p.left = node
                     node.parent = p
+                    c += 1
                     break
                 else:
                     p = p.left
+                    c += 1
             else:
                 if p.right is None:
                     p.right = node
                     node.parent = p
+                    c += 1
                     break
                 else:
                     p = p.right
-'''
+                    c += 1
+        if c > self.l:
+            self.l = c
+
+
+
 tree = Tree()
-for x in [7, 3, 2, 1, 9, 5, 4, 6, 8]:
+A = [int(x) for x in input().split()]
+for x in A:
     tree.add(x)
-tree.print()  # напечатает 1 2 3 4 5 6 7 8 9
-'''
+print(tree.l)
