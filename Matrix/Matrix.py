@@ -1,7 +1,6 @@
 def skal_proizv(a, b):
     if len(a) != len(b):
-        print('Векторы имеют разную длину')
-        return
+        raise Exception('Векторы имеют разную длину')
     res = 0
     for i in range(len(a)):
         res += a[i]*b[i]
@@ -10,15 +9,15 @@ def skal_proizv(a, b):
 
 def write_vec():
     print('Введите координаты вектора в строку через пробел')
-    return list(map(float, input().split()))
-
+    return list(map(int, input().split()))
 
 def write_matrix():
     A = []
     print('Введите количество строк матрицы')
     n = int(input())
+    print('Введите строки матрицы, разделяя элементы пробелом')
     for i in range(n):
-        A.append([float(x) for x in input().split()])
+        A.append([int(x) for x in input().split()])
     return A
 
 def matrix_2D(A): #Печатает матрицу
@@ -41,7 +40,27 @@ def matrix_multiply(A, B):
             C[i].append(skal_proizv(A[i], B[j]))
     return C
 
+def podmatrix_for_first_stroke(A, j):
+    B = []
+    A = A[1:] + A[0:1]
+    for i in range(len(A)-1):
+        B.append(A[i][0:j] + A[i][j+1:])
+    return B
+
+def det(A):
+    res = 0
+    z = 0
+    if len(A) != len(A[0]):
+        raise Exception("Матрица не является квадратной")
+    if len(A[0]) == 1: #Крайний случай
+        return int(A[0][0])
+    else:
+        for j in range(len(A[0])):
+            z = det(podmatrix_for_first_stroke(A, j))
+            res += (-1)**(j)*A[0][j]*z
+    return res
+
 A = write_matrix()
-B = write_matrix()
-C = write_matrix()
-matrix_2D(matrix_multiply(matrix_multiply(A, B), C))
+print(det(A))
+
+
