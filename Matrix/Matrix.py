@@ -60,7 +60,25 @@ def det(A):
             res += (-1)**(j)*A[0][j]*z
     return res
 
+def podmatrix(A, i, j):
+    B = []
+    A = A[:i] + A[i+1:]
+    for k in range(len(A)):
+        B.append(A[k][0:j] + A[k][j + 1:])
+    return B
+
+
+def invert_matrix(A):
+    d = det(A)
+    if d == 0:
+        raise Exception("Матрица вырождена")
+    if len(A) != len(A[0]):
+        raise Exception("Матрица не является квадратной")
+    B = [[0*len(A)]*len(A) for i in range(len(A))]
+    for i in range(len(A)):
+        for j in range(len(A)):
+            B[i][j] = (-1)**(i+j)*(det(podmatrix(A, i, j))/d)
+    return trans_matrix(B)
+
 A = write_matrix()
-print(det(A))
-
-
+matrix_2D(invert_matrix(A))
