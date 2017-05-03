@@ -1,11 +1,10 @@
-__author__ = 'student'
 import re
 
 def read_rules():
     f = open('rules.txt')
     rules = []
-    for line in f:
-        rules.extend(re.findall("^(.)q(\d+)->(.)(q(\d+)(.)|STOP)$", line))
+    for line in f.read().split('\n'):
+        rules.extend(re.findall('^(.)q(\d+)->(.)(q(\d+)(.)|STOP).?$', line))
     return rules
 
 def read_lenta():
@@ -21,7 +20,7 @@ def karetka(rules, lenta, k, state): # пишем для катой клетки
     for line in rules:
         if lenta[k] == line[0] and state == int(line[1]):
             lenta[k] = line[2]
-            state = int(line[4])
+            if line[3] != 'STOP': state = int(line[4])
             if line[5] == 'R':
                 k += 1
                 return lenta, k, state
@@ -39,8 +38,12 @@ def magic(rules, lenta, k, state):
         lenta, k, state = karetka(rules, lenta, k, state)
         if state == 'end':
             x = False
-    return lenta
+    new_lenta = []
+    for s in lenta:
+        if s != 'B':
+            new_lenta.append(s)
+    return new_lenta
 
 rules = read_rules()
 lenta = read_lenta()
-print(magic(rules, lenta, 1, 1))
+print(*magic(rules, lenta, 1, 1))
