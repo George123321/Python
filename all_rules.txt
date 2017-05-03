@@ -88,3 +88,13 @@ bq1->bq2R
 aq2->BSTOPL
 bq2->BSTOPL
 Bq2->BSTOPL
+
+Удалить из слова первое вхождение символа a, если такое имеется (слово состоит из символов a,b,c):
+aq1->BSTOPL
+bq1->bq2R
+cq1->cq2R
+
+aq2->BSTOPL
+cq2->cq2R
+bq2->bq2R
+Bq2->BSTOPL
