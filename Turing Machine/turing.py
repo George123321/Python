@@ -47,3 +47,4 @@ def magic(rules, lenta, k, state):
 rules = read_rules()
 lenta = read_lenta()
 print(*magic(rules, lenta, 1, 1))
+
