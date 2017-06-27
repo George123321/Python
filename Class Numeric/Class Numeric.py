@@ -36,11 +36,11 @@ class Numeric:
         if self.q == 1:    # чтобы не было 10/1
             return '{}'.format(self.p)
         if self.p // 1000 >= 1 or self.q // 1000 >= 1:  # округление числа, т.е. если 12483/1243 - то переводится в float
-            return '{}'.format((self.p/self.q).__round__(3))   # FIXED! слишком много знаков после запятой
+            return '{}'.format((self.p / self.q).__round__(3))   # FIXED! слишком много знаков после запятой
         return '{}/{}'.format(self.p, self.q)   # обычное распечатывание типа 15/28
 
     def __add__(self, other):   # сложение
-        res = Numeric(self.p*other.q+self.q*other.p, self.q*other.q)
+        res = Numeric(self.p * other.q + self.q * other.p, self.q * other.q)
         res.reduction()
         return res
 
@@ -50,7 +50,7 @@ class Numeric:
         return res
 
     def __mul__(self, other):   # умножение
-        res = Numeric(self.p*other.p, self.q*other.q)
+        res = Numeric(self.p * other.p, self.q * other.q)
         res.reduction()
         return res
 
@@ -63,27 +63,27 @@ class Numeric:
         return res
 
     def __pow__(self, other):   # возведение в степень (причем в любую! (вроде))
-        res = Numeric(self.p**(other.p/other.q), self.q**(other.p/other.q))
+        res = Numeric(self.p ** (other.p / other.q), self.q ** (other.p / other.q))
         res.reduction()
         return res
 
     def __lt__(self, other):    # x < y
-        if self.p*other.q < other.p*self.q:
+        if self.p * other.q < other.p * self.q:
             return True
         return False
 
     def __le__(self, other):    # x ≤ y
-        if self.p*other.q <= other.p*self.q:
+        if self.p * other.q <= other.p * self.q:
             return True
         return False
 
     def __eq__(self, other):    # x == y
-        if self.p*other.q == other.p*self.q:
+        if self.p * other.q == other.p * self.q:
             return True
         return False
 
     def __ne__(self, other):    # x != y
-        if self.p*other.q != other.p*self.q:
+        if self.p * other.q != other.p * self.q:
             return True
         return False
 
@@ -93,7 +93,7 @@ class Numeric:
         return False
 
     def __ge__(self, other):    # x ≥ y
-        if self.p*other.q >= other.p*self.q:
+        if self.p * other.q >= other.p * self.q:
             return True
         return False
 
@@ -103,4 +103,4 @@ class Numeric:
 
 a = Numeric(15)
 b = Numeric(-14, 3)
-print(a/b)
+print(a+b)
