@@ -36,7 +36,7 @@ class Numeric:
         if self.q == 1:    # чтобы не было 10/1
             return '{}'.format(self.p)
         if self.p // 1000 >= 1 or self.q // 1000 >= 1:  # округление числа, т.е. если 12483/1243 - то переводится в float
-            return '{}'.format(self.p/self.q)   # FIXME слишком много знаков после запятой
+            return '{}'.format((self.p/self.q).__round__(3))   # FIXED! слишком много знаков после запятой
         return '{}/{}'.format(self.p, self.q)   # обычное распечатывание типа 15/28
 
     def __add__(self, other):   # сложение
@@ -97,7 +97,10 @@ class Numeric:
             return True
         return False
 
+    def __abs__(self):
+        return Numeric(abs(self.p), self.q)
+
 
 a = Numeric(15)
 b = Numeric(-14, 3)
-print(a==b)
+print(a/b)
