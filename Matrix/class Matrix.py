@@ -2,7 +2,7 @@ class Matrix:
     def __init__(self, n, m): # n - количество строк, m - количество столбцов
         self.n = n
         self.m = m
-        self.list = []
+        self.list = [[None for i in range(m)] for j in range(n)]
     def write_matrix(self):
         print('Введите строки матрицы, разделяя элементы пробелом')
         for i in range(self.n):

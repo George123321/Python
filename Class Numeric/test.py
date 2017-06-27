@@ -7,4 +7,6 @@ def evklid(a, b):
         a = a % b
     return b
 
-print(evklid(100, 25))
+a = []
+a.append(input().split())
+print(a)

@@ -99,8 +99,3 @@ class Numeric:
 
     def __abs__(self):
         return Numeric(abs(self.p), self.q)
-
-
-a = Numeric(15)
-b = Numeric(-14, 3)
-print(a+b)
