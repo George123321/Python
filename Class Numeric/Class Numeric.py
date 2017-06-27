@@ -67,9 +67,37 @@ class Numeric:
         res.reduction()
         return res
 
+    def __lt__(self, other):    # x < y
+        if self.p*other.q < other.p*self.q:
+            return True
+        return False
 
-a = Numeric(15/5, 1)
-b = Numeric(14, 3)
-print(a/b)
+    def __le__(self, other):    # x ≤ y
+        if self.p*other.q <= other.p*self.q:
+            return True
+        return False
+
+    def __eq__(self, other):    # x == y
+        if self.p*other.q == other.p*self.q:
+            return True
+        return False
+
+    def __ne__(self, other):    # x != y
+        if self.p*other.q != other.p*self.q:
+            return True
+        return False
+
+    def __gt__(self, other):    # x > y
+        if self.p * other.q > other.p * self.q:
+            return True
+        return False
+
+    def __ge__(self, other):    # x ≥ y
+        if self.p*other.q >= other.p*self.q:
+            return True
+        return False
 
 
+a = Numeric(15)
+b = Numeric(-14, 3)
+print(a==b)
