@@ -7,7 +7,7 @@ class Matrix:
         self.list = [[None for i in range(m)] for j in range(n)]
 
     def write_matrix(self):     # запись в матрицу
-        print('Введите строки матрицы, разделяя элементы пробелом')
+        print('Введите строки матрицы, разделяя элементы пробелом (дробные числа, например 1/2, вводить в виде 1|2)')
         for i in range(self.n):
             s = input().split()
             if len(s) != self.m:
@@ -18,8 +18,8 @@ class Matrix:
         return self
 
     def print(self):    # печать матрицы
-        #if None in self.list[0]:   #FIXME почему-то вылетает, видимо, надо прописать в Numeric проверку наличия в списке
-        #    raise Exception('Вы не записали элементы в матрицу!')
+        if None in self.list[0]:
+            raise Exception('Вы не записали элементы в матрицу!')
         for i in range(self.n):
             print()
             for j in range(self.m):
@@ -31,8 +31,8 @@ class Matrix:
         self.m = len(self.list[0])
 
     def trans(self):    # транспонирование матрицы
-        #if None in self.list[0]:   #FIXME почему-то вылетает, видимо, надо прописать в Numeric проверку наличия в списке
-        #    raise Exception('Вы не записали элементы в матрицу!')
+        if None in self.list[0]:
+            raise Exception('Вы не записали элементы в матрицу!')
         B = Matrix(self.m, self.n)
         for i in range(self.n):
             for j in range(self.m):
@@ -52,8 +52,8 @@ class Matrix:
         return res
 
     def __add__(self, other):   # сумма матриц
-        #if None in self.list[0] or None in other.list[0]:   #FIXME почему-то вылетает, видимо, надо прописать в Numeric проверку наличия в списке
-        #    raise Exception('Вы не записали элементы в одну из матриц!')
+        if None in self.list[0] or None in other.list[0]:
+            raise Exception('Вы не записали элементы в одну из матриц!')
         if self.n != other.n or self.m != other.m:
             raise Exception('Матрицы разных размеров!')
         print('Результат суммы матриц:', end='')
@@ -64,8 +64,8 @@ class Matrix:
         return res
 
     def __sub__(self, other):  # разность
-        #if None in self.list[0] or None in other.list[0]:   #FIXME почему-то вылетает, видимо, надо прописать в Numeric проверку наличия в списке
-        #    raise Exception('Вы не записали элементы в одну из матриц!')
+        if None in self.list[0] or None in other.list[0]:
+            raise Exception('Вы не записали элементы в одну из матриц!')
         if self.n != other.n or self.m != other.m:
             raise Exception('Матрицы разных размеров!')
         print('Результат разности матриц:', end='')
@@ -76,8 +76,8 @@ class Matrix:
         return res
 
     def __mul__(self, other):  # умножение
-        pass    # FIXME чет не робит пока
-        '''
+        if None in self.list[0] or None in other.list[0]:
+            raise Exception('Вы не записали элементы в одну из матриц!')
         res = Matrix(self.n, other.m)
         other.trans()
         for i in range(self.n):
@@ -85,12 +85,12 @@ class Matrix:
                 res.list[i][j] = self.skal_proizv(self.list[i], other.list[j])
         res.refresh()
         return res
-        '''
 
 
-A = Matrix(2, 2)
+A = Matrix(2, 3)
 A.write_matrix()
-B = Matrix(2, 2)
+B = Matrix(3, 4)
 B.write_matrix()
-(A-B).print()
-
+C = A*B
+C.print()
+print(C.n, C.m)
