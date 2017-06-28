@@ -1,3 +1,5 @@
+from Class_Numeric import Numeric
+
 def evklid(a, b):
     while a != 0:
         if a < b:
@@ -7,6 +9,6 @@ def evklid(a, b):
         a = a % b
     return b
 
-a = []
-a.append(input().split())
-print(a)
+a = [[Numeric(1, 2), Numeric(0), None]]
+if None in a[0]:
+    print('Y')
