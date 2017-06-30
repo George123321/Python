@@ -41,7 +41,6 @@ class Matrix:
         self.refresh()
         return self
 
-
     def skal_proizv(self, a, b):
         if len(a) != len(b):
             raise Exception('Векторы имеют разную длину')
@@ -86,11 +85,39 @@ class Matrix:
         res.refresh()
         return res
 
+    def podmatrix(self, l, s):  # создает подматрицу, выбивая l-ую строку и s-ый столбец
+        B = Matrix(self.n, self.m)
+        B.list[:] = self.list[:l] + self.list[l+1:]
+        B.refresh()
+        B.trans()
+        B.list[:] = B.list[:s] + B.list[s+1:]
+        B.refresh()
+        B.trans()
+        B.refresh()
+        return B
 
-A = Matrix(2, 3)
-A.write_matrix()
-B = Matrix(3, 4)
-B.write_matrix()
-C = A*B
-C.print()
-print(C.n, C.m)
+    def det(self):
+        res = Numeric(0)
+        z = Numeric(0)
+        if self.n != self.m:
+            raise Exception("Матрица не является квадратной")
+        if len(self.list[0]) == 1:  # Крайний случай
+            return self.list[0][0]
+        else:
+            for j in range(len(self.list[0])):
+                m = self.podmatrix(0, j)
+                z = m.det()
+                res += (Numeric(-1)) ** (Numeric(j)) * self.list[0][j] * z
+        return res
+
+    def invert_matrix(self):
+        d = self.det()
+        if d == 0:
+            raise Exception("Матрица вырождена")
+        #if self.n != self.m:   # Уже проверяется при подсчете детерминанта
+        #    raise Exception("Матрица не является квадратной")
+        B = Matrix(self.n, self.n)
+        for i in range(self.n):
+            for j in range(self.n):
+                B.list[i][j] = (Numeric(-1)) ** (Numeric(i + j)) * (self.podmatrix(i, j).det() / d)
+        return B.trans()

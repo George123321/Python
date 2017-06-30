@@ -114,3 +114,6 @@ class Numeric:
 
     def __abs__(self):
         return Numeric(abs(self.p), self.q)
+
+    def __float__(self):
+        return self.p/self.q
