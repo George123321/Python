@@ -1,7 +1,9 @@
 from Class_Numeric import Numeric
 
 class Matrix:
-    def __init__(self, n, m):   # n - количество строк, m - количество столбцов
+    def __init__(self, n, m = 1.1):   # n - количество строк, m - количество столбцов
+        if m == 1.1:
+            m = n
         self.n = n
         self.m = m
         self.list = [[None for i in range(m)] for j in range(n)]
@@ -121,3 +123,25 @@ class Matrix:
             for j in range(self.n):
                 B.list[i][j] = (Numeric(-1)) ** (Numeric(i + j)) * (self.podmatrix(i, j).det() / d)
         return B.trans()
+
+class Identity_Matrix(Matrix):
+    def __init__(self, n):
+        super(Identity_Matrix, self).__init__(n, n)
+        self.contain()
+
+    def contain(self):
+        if self.n != self.m:
+            raise Exception('Единичная матрица должна быть квадратной')
+        self.list[:] = [[Numeric(0) for i in range(self.m)] for j in range(self.n)]
+        for i in range(self.n):
+            self.list[i][i] = Numeric(1)
+        return self
+
+class Zero_Matrix(Matrix):
+    def __init__(self, n, m):
+        super(Zero_Matrix, self).__init__(n, m)
+        self.contain()
+
+    def contain(self):
+        self.list[:] = [[Numeric(0) for i in range(self.m)] for j in range(self.n)]
+        return self
