@@ -194,9 +194,10 @@ class Matrix:
         '''
         for i in range(self.r - 1, -1, -1):
             if self.list[i][i] != Numeric(1):
+                q = self.list[i][i]
                 for j in range(self.m):
-                    self.list[i][j] /= self.list[i][i]
-                print('Разделим', i + 1, '- ю строку на', self.list[i][i])
+                    self.list[i][j] /= q
+                print('Разделим', i + 1, '- ю строку на', q)
             for k in range(0, i):
                 if self.list[k][i] != Numeric(0):
                     q = self.list[k][i] / self.list[i][i]
@@ -216,6 +217,14 @@ class Matrix:
         for i in range(self.n):
             for j in range(self.m):
                 res.list[i][j] = self.list[self.n-1-i][self.m-1-j]
+        return res
+
+    def clip(self, other):  # сцепляет две матрицы рядом
+        if self.n != other.n:
+            raise Exception('У матриц разное количество строк')
+        res = Matrix(self.n, self.m + other.m)
+        for i in range(self.n):
+            res.list[i][:] = self.list[i] + other.list[i]
         return res
 
 class Identity_Matrix(Matrix):
