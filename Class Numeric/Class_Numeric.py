@@ -68,15 +68,15 @@ class Numeric:
         return res
 
     def __lt__(self, other):    # x < y
-        if other is not Numeric:
-            raise Exception('Поптыка сравнить разные классы')
+        #if other is not Numeric:
+        #    raise Exception('Поптыка сравнить разные классы')
         if self.p * other.q < other.p * self.q:
             return True
         return False
 
     def __le__(self, other):    # x ≤ y
-        if other is not Numeric:
-            raise Exception('Поптыка сравнить разные классы')
+        #if other is not Numeric:
+        #    raise Exception('Поптыка сравнить разные классы')
         if self.p * other.q <= other.p * self.q:
             return True
         return False
@@ -85,29 +85,29 @@ class Numeric:
     #   return self in item
 
     def __eq__(self, other):    # x == y
-        if other is not Numeric:
+        if other is None:
             return False
         if self.p * other.q == other.p * self.q:
             return True
         return False
 
     def __ne__(self, other):    # x != y
-        if other is not Numeric:
-            raise Exception('Поптыка сравнить разные классы')
+        #if other is not Numeric:
+        #    raise Exception('Поптыка сравнить разные классы')
         if self.p * other.q != other.p * self.q:
             return True
         return False
 
     def __gt__(self, other):    # x > y
-        if other is not Numeric:
-            raise Exception('Поптыка сравнить разные классы')
+        #if other is not Numeric:
+        #    raise Exception('Поптыка сравнить разные классы')
         if self.p * other.q > other.p * self.q:
             return True
         return False
 
     def __ge__(self, other):    # x ≥ y
-        if other is not Numeric:
-            raise Exception('Поптыка сравнить разные классы')
+        #if other is not Numeric:
+        #    raise Exception('Поптыка сравнить разные классы')
         if self.p * other.q >= other.p * self.q:
             return True
         return False

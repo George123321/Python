@@ -45,7 +45,7 @@ class Matrix:
 
     def skal_proizv(self, a, b):
         if len(a) != len(b):
-            raise Exception('Векторы имеют разную длину')
+            raise Exception('Попытка перемножить строку и столбец разной длины')
         res = Numeric(0)
         for i in range(len(a)):
             res += a[i] * b[i]
@@ -124,6 +124,75 @@ class Matrix:
                 B.list[i][j] = (Numeric(-1)) ** (Numeric(i + j)) * (self.podmatrix(i, j).det() / d)
         return B.trans()
 
+    #def Gauss(self):
+    #    for i in range(self.m): # сначала смещаем все строки, где первый элемент нуль, вниз
+    #        if
+    #        for k in range(i, self.n):
+
+    def gauss(self):
+        for i in range(self.n):
+            k = i
+            if k + 1 > self.m:  # если это случилось, то алгоритм вылетет
+                break
+            '''
+            дальше хитрожопый подгон на проверку того, что элемент нулевой (частный случай), и делает перестановку
+            '''
+            while k < self.n and self.list[k][i] == Numeric(0):     # проверят, не нулевой ли первый элемент
+                k += 1
+            '''
+            по выходе имеем либо весь столбец нули, либо нашли ненулевой элемент
+            '''
+            if k == self.n and self.list[k - 1][i] == Numeric(0):
+                continue
+            else:
+                if k != i:
+                    self.list[k][i], self.list[i][i] = self.list[i][i], self.list[k][i]
+                    print('Поменяем местами', k + 1, '- ю и', i + 1, '- ю строки')
+            '''
+            в данный момент мы сделали так, что первый элемент не нуль. Делим!
+            '''
+            for k in range(i + 1, self.n):
+                if self.list[k][i] != Numeric(0):
+                    q = self.list[k][i] / self.list[i][i]
+                    print('Из', k + 1, '- ой строки вычтем', q, i + 1, '- ых строк')
+                    for j in range(i, self.m):
+                        #q = tmp / self.list[i][i]
+                        self.list[k][j] -= q * self.list[i][j]
+        '''
+        в этот момент есть 2 варианта: последняя (последние) строки нулевые, либо там есть элементы. В первом варианте
+        нужно пропустить нулевые строки и перейти к тем, где есть элементы, а во втором мы уже там
+        '''
+        p = '123'   # если p осталось '123', значит последние строки не нулевые
+        for i in range(self.n):
+            if self.list[i] == [Numeric(0) for k in range(self.m)]:
+                p = i - 1   # p - номер строки, где есть элементы
+                break
+        if p == '123':
+            p = self.n - 1
+        '''
+        разделим последнюю строчку так, чтобы на диагонали появлялись единицы. Номер этой строки - p
+        '''
+        for j in range(self.m):
+            if self.list[p][j] != Numeric(0):
+                tmp = self.list[p][j]
+                l = j
+                break
+        for j in range(l, self.m):
+            self.list[p][j] /= tmp
+        print('Разделим', p + 1, '- ю строку на', tmp)
+        '''
+        на этом моменте прямой ход алгоритма гаусса закончен
+        '''
+        return self
+
+
+
+
+
+
+
+
+
 class Identity_Matrix(Matrix):
     def __init__(self, n):
         super(Identity_Matrix, self).__init__(n, n)
@@ -138,7 +207,7 @@ class Identity_Matrix(Matrix):
         return self
 
 class Zero_Matrix(Matrix):
-    def __init__(self, n, m):
+    def __init__(self, n, m = 1.1):
         super(Zero_Matrix, self).__init__(n, m)
         self.contain()
 
