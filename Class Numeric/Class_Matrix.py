@@ -6,6 +6,7 @@ class Matrix:
             m = n
         self.n = n
         self.m = m
+        self.r = None   # ранг матрицы
         self.list = [[None for i in range(m)] for j in range(n)]
 
     def write_matrix(self):     # запись в матрицу
@@ -124,12 +125,7 @@ class Matrix:
                 B.list[i][j] = (Numeric(-1)) ** (Numeric(i + j)) * (self.podmatrix(i, j).det() / d)
         return B.trans()
 
-    #def Gauss(self):
-    #    for i in range(self.m): # сначала смещаем все строки, где первый элемент нуль, вниз
-    #        if
-    #        for k in range(i, self.n):
-
-    def gauss(self):
+    def gauss_straight(self):   # прямой ход алгоритма гаусса
         for i in range(self.n):
             k = i
             if k + 1 > self.m:  # если это случилось, то алгоритм вылетет
@@ -182,27 +178,45 @@ class Matrix:
                 self.list[p][j] /= tmp
             print('Разделим', p + 1, '- ю строку на', tmp)
         if p < 0:   # это условие значит, что матрица нулевая
+            self.r = p + 1
             return self
         '''
-        на этом моменте прямой ход алгоритма гаусса закончен. p указывает на ненулевую строку
+        на этом моменте прямой ход алгоритма гаусса закончен. p указывает на последнюю ненулевую строку, а значит
+        p+1 - ранг матрицы
         '''
+        self.r = p + 1
         return self
 
-    def gauss_trans(self):  # функция транспонирует матрицу по побочной диагонали, а потом как обычно
+    def gauss_back(self):   # обратный ход алгоритма гаусса
+        '''
+        считаем, что матрица уже прошла прямой ход гаусса. Таким образом, мы знаем ранг матрицы, а матрица имеет
+        ступенчатый вид
+        '''
+        for i in range(self.r - 1, -1, -1):
+            if self.list[i][i] != Numeric(1):
+                for j in range(self.m):
+                    self.list[i][j] /= self.list[i][i]
+                print('Разделим', i + 1, '- ю строку на', self.list[i][i])
+            for k in range(0, i):
+                if self.list[k][i] != Numeric(0):
+                    q = self.list[k][i] / self.list[i][i]
+                    print('Из', k + 1, '- ой строки вычтем', q, i + 1, '- ых строк')
+                    for j in range(i, self.m):
+                        self.list[k][j] -= q * self.list[i][j]
+        return self
+
+    def gauss(self):
+        print('Прямой ход алгоритма Гаусса:')
+        self.gauss_straight()
+        print('Обратный ход алгоритма Гаусса:')
+        self.gauss_back()
+
+    def gauss_trans(self):  # функция транспонирует матрицу по побочной диагонали, а потом как обычно. Понять бы, зачем это нужно
         res = Matrix(self.n, self.m)
         for i in range(self.n):
             for j in range(self.m):
                 res.list[i][j] = self.list[self.n-1-i][self.m-1-j]
         return res
-
-
-
-
-
-
-
-
-
 
 class Identity_Matrix(Matrix):
     def __init__(self, n):
