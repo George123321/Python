@@ -193,6 +193,8 @@ class Matrix:
         ступенчатый вид
         '''
         for i in range(self.r - 1, -1, -1):
+            if self.list[i][i] == Numeric(0):   # костыль, зато работает!
+                continue
             if self.list[i][i] != Numeric(1):
                 q = self.list[i][i]
                 for j in range(self.m):
