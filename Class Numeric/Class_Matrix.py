@@ -114,7 +114,7 @@ class Matrix:
 
     def invert_matrix(self):
         d = self.det()
-        if d == 0:
+        if d == Numeric(0):
             raise Exception("Матрица вырождена")
         #if self.n != self.m:   # Уже проверяется при подсчете детерминанта
         #    raise Exception("Матрица не является квадратной")
@@ -177,13 +177,24 @@ class Matrix:
                 tmp = self.list[p][j]
                 l = j
                 break
-        for j in range(l, self.m):
-            self.list[p][j] /= tmp
-        print('Разделим', p + 1, '- ю строку на', tmp)
+        if p >= 0 and tmp != Numeric(1):  # это условие значит, что матрица не нулевая
+            for j in range(l, self.m):
+                self.list[p][j] /= tmp
+            print('Разделим', p + 1, '- ю строку на', tmp)
+        if p < 0:   # это условие значит, что матрица нулевая
+            return self
         '''
-        на этом моменте прямой ход алгоритма гаусса закончен
+        на этом моменте прямой ход алгоритма гаусса закончен. p указывает на ненулевую строку
         '''
         return self
+
+    def gauss_trans(self):  # функция транспонирует матрицу по побочной диагонали, а потом как обычно
+        res = Matrix(self.n, self.m)
+        for i in range(self.n):
+            for j in range(self.m):
+                res.list[i][j] = self.list[self.n-1-i][self.m-1-j]
+        return res
+
 
 
 
