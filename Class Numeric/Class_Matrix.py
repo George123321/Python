@@ -142,7 +142,7 @@ class Matrix:
                 continue
             else:
                 if k != i:
-                    self.list[k][i], self.list[i][i] = self.list[i][i], self.list[k][i]
+                    self.list[k], self.list[i] = self.list[i], self.list[k]
                     print('Поменяем местами', k + 1, '- ю и', i + 1, '- ю строки')
             '''
             в данный момент мы сделали так, что первый элемент не нуль. Делим!
